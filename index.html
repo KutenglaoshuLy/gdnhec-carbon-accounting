@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公共机构碳排放核算系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌱 公共机构碳排放核算系统</h1>
+            <p class="subtitle">依据《公共机构碳排放核算指南》（JS_T 303-2026）标准</p>
+        </header>
+
+        <div class="info-box">
+            <h3>📋 核算说明</h3>
+            <ul>
+                <li><strong>核算范围：</strong>化石燃料燃烧排放、外购电力蕴含排放、外购热力蕴含排放</li>
+                <li><strong>核算原则：</strong>完整性、一致性、准确性</li>
+                <li><strong>统计周期：</strong>原则上以自然年为统计周期</li>
+            </ul>
+        </div>
+
+        <!-- 基本信息 -->
+        <section class="section">
+            <h2>一、基本信息</h2>
+            <div class="form-group">
+                <label for="orgName">机构名称（选填）：</label>
+                <input type="text" id="orgName" placeholder="请输入机构名称（可留空）">
+            </div>
+            <div class="form-group">
+                <label for="year">核算年度：</label>
+                <select id="year">
+                    <option value="2026">2026 年</option>
+                    <option value="2025">2025 年</option>
+                    <option value="2024">2024 年</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="province">所在省份：</label>
+                <select id="province">
+                    <option value="">请选择省份</option>
+                    <option value="北京">北京</option>
+                    <option value="天津">天津</option>
+                    <option value="河北">河北</option>
+                    <option value="山西">山西</option>
+                    <option value="内蒙古">内蒙古</option>
+                    <option value="辽宁">辽宁</option>
+                    <option value="吉林">吉林</option>
+                    <option value="黑龙江">黑龙江</option>
+                    <option value="上海">上海</option>
+                    <option value="江苏">江苏</option>
+                    <option value="浙江">浙江</option>
+                    <option value="安徽">安徽</option>
+                    <option value="福建">福建</option>
+                    <option value="江西">江西</option>
+                    <option value="山东">山东</option>
+                    <option value="河南">河南</option>
+                    <option value="湖北">湖北</option>
+                    <option value="湖南">湖南</option>
+                    <option value="广东">广东</option>
+                    <option value="广西">广西</option>
+                    <option value="海南">海南</option>
+                    <option value="重庆">重庆</option>
+                    <option value="四川">四川</option>
+                    <option value="贵州">贵州</option>
+                    <option value="云南">云南</option>
+                    <option value="西藏">西藏</option>
+                    <option value="陕西">陕西</option>
+                    <option value="甘肃">甘肃</option>
+                    <option value="青海">青海</option>
+                    <option value="宁夏">宁夏</option>
+                    <option value="新疆">新疆</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- 化石燃料燃烧排放 -->
+        <section class="section">
+            <h2>二、化石燃料燃烧排放</h2>
+            <p class="section-desc">填写各类化石燃料的消耗量，系统将自动计算直接排放量</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>燃料品种</th>
+                        <th>消耗量单位</th>
+                        <th>消耗量</th>
+                        <th>排放因子 (tCO₂/单位)</th>
+                        <th>排放量 (tCO₂)</th>
+                    </tr>
+                </thead>
+                <tbody id="fuelTable">
+                    <tr>
+                        <td>无烟煤</td>
+                        <td>吨 (t)</td>
+                        <td><input type="number" id="coal_anthracite" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">2.429</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>烟煤</td>
+                        <td>吨 (t)</td>
+                        <td><input type="number" id="coal_bituminous" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">2.174</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>燃料油</td>
+                        <td>升 (L)</td>
+                        <td><input type="number" id="fuel_oil" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.002978</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>汽油</td>
+                        <td>升 (L)</td>
+                        <td><input type="number" id="gasoline" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.002179</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>柴油</td>
+                        <td>升 (L)</td>
+                        <td><input type="number" id="diesel" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.002718</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>一般煤油</td>
+                        <td>升 (L)</td>
+                        <td><input type="number" id="kerosene" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.002539</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>天然气</td>
+                        <td>立方米 (m³)</td>
+                        <td><input type="number" id="natural_gas" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.002184</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>液化石油气</td>
+                        <td>千克 (kg)</td>
+                        <td><input type="number" id="lpg" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.003166</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>焦炉煤气</td>
+                        <td>立方米 (m³)</td>
+                        <td><input type="number" id="coke_oven_gas" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.0007984</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                    <tr>
+                        <td>管道煤气</td>
+                        <td>立方米 (m³)</td>
+                        <td><input type="number" id="pipeline_gas" min="0" step="0.01" placeholder="0" oninput="calculateFuel()"></td>
+                        <td class="factor">0.0006997</td>
+                        <td class="emission">0.00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="4"><strong>化石燃料燃烧直接排放合计</strong></td>
+                        <td><strong id="totalDirectEmission">0.00</strong> tCO₂</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <!-- 外购电力蕴含排放 -->
+        <section class="section">
+            <h2>三、外购电力蕴含排放</h2>
+            <p class="section-desc">填写外购电量和转供电量，系统根据所在省份自动计算间接排放量</p>
+            
+            <div class="form-group">
+                <label for="grid_power_consumption">外购电量 (MWh)：</label>
+                <input type="number" id="grid_power_consumption" min="0" step="0.01" placeholder="请输入外购电量" oninput="calculatePower()">
+                <span class="help-text">包括常规市政电网电力、市场化交易购入非化石能源电力和绿电直连电力</span>
+            </div>
+
+            <div class="form-group">
+                <label for="green_power">其中：绿电直连电量 (MWh)：</label>
+                <input type="number" id="green_power" min="0" step="0.01" placeholder="0" oninput="calculatePower()">
+                <span class="help-text">绿电排放因子按 0 计</span>
+            </div>
+
+            <div class="form-group">
+                <label for="resale_power">转供电量 (MWh)：</label>
+                <input type="number" id="resale_power" min="0" step="0.01" placeholder="0" oninput="calculatePower()">
+                <span class="help-text">向居民、商户等转供的电量（如有）</span>
+            </div>
+
+            <div class="result-box">
+                <div class="result-item">
+                    <span class="result-label">省级电网排放因子：</span>
+                    <span class="result-value" id="power_emission_factor">-</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">外购电力间接排放：</span>
+                    <span class="result-value" id="power_indirect_emission">0.00</span> tCO₂
+                </div>
+            </div>
+        </section>
+
+        <!-- 外购热力蕴含排放 -->
+        <section class="section">
+            <h2>三、外购热力蕴含排放</h2>
+            <p class="section-desc">填写外购热力和转供热量，计算间接排放量</p>
+            
+            <div class="form-group">
+                <label for="heat_purchase">外购热量 (GJ)：</label>
+                <input type="number" id="heat_purchase" min="0" step="0.01" placeholder="请输入外购热量" oninput="calculateHeat()">
+                <span class="help-text">优先采用热量表计量数据</span>
+            </div>
+
+            <div class="form-group">
+                <label for="heat_resale">转供热量 (GJ)：</label>
+                <input type="number" id="heat_resale" min="0" step="0.01" placeholder="0" oninput="calculateHeat()">
+                <span class="help-text">向居民、商户等转供的热量（如有）</span>
+            </div>
+
+            <div class="form-group">
+                <label for="heat_emission_factor">外购热力排放因子 (tCO₂/GJ)：</label>
+                <input type="number" id="heat_emission_factor" value="0.11" step="0.0001" oninput="calculateHeat()">
+                <span class="help-text">默认值 0.11 tCO₂/GJ，可根据国家温室气体排放因子数据库更新</span>
+            </div>
+
+            <div class="result-box">
+                <div class="result-item">
+                    <span class="result-label">外购热力间接排放：</span>
+                    <span class="result-value" id="heat_indirect_emission">0.00</span> tCO₂
+                </div>
+            </div>
+        </section>
+
+        <!-- 计算结果汇总 -->
+        <section class="section result-section">
+            <h2>四、核算结果汇总</h2>
+            <button class="calculate-btn" onclick="calculateTotal()">🔢 开始计算</button>
+            <button class="reset-btn" onclick="resetForm()">🔄 重置表单</button>
+            <button class="export-btn" onclick="exportReport()">📄 导出报告</button>
+
+            <div class="result-summary" id="resultSummary" style="display: none;">
+                <h3>📊 <span id="resultOrgName"></span> - <span id="resultYear"></span>年度碳排放核算结果</h3>
+                
+                <div class="result-grid">
+                    <div class="result-card">
+                        <div class="result-icon">🔥</div>
+                        <div class="result-title">直接排放</div>
+                        <div class="result-value-large" id="resultDirect">0.00</div>
+                        <div class="result-unit">tCO₂</div>
+                        <div class="result-detail" id="resultDirectDetail"></div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">⚡</div>
+                        <div class="result-title">外购电力间接排放</div>
+                        <div class="result-value-large" id="resultPower">0.00</div>
+                        <div class="result-unit">tCO₂</div>
+                        <div class="result-detail" id="resultPowerDetail"></div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-icon">🌡️</div>
+                        <div class="result-title">外购热力间接排放</div>
+                        <div class="result-value-large" id="resultHeat">0.00</div>
+                        <div class="result-unit">tCO₂</div>
+                        <div class="result-detail" id="resultHeatDetail"></div>
+                    </div>
+
+                    <div class="result-card highlight">
+                        <div class="result-icon">🌍</div>
+                        <div class="result-title">碳排放总量</div>
+                        <div class="result-value-super" id="resultTotal">0.00</div>
+                        <div class="result-unit">tCO₂</div>
+                        <div class="result-detail" id="resultTotalDetail"></div>
+                    </div>
+                </div>
+
+                <div class="formula-box">
+                    <h4>📐 计算公式（依据标准第 8 章）</h4>
+                    <p><strong>排放总量公式：</strong>E<sub>总</sub> = E<sub>直接</sub> + E<sub>间接</sub></p>
+                    <p><strong>直接排放公式：</strong>E<sub>直接</sub> = ∑(FC<sub>i</sub> × EF<sub>i,直接</sub>)</p>
+                    <p><strong>间接排放公式：</strong>E<sub>间接</sub> = E<sub>电力</sub> + E<sub>热力</sub></p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>本系统依据《公共机构碳排放核算指南》（JS_T 303-2026）开发 | 数据来源：全国公共机构节约能源资源综合信息平台</p>
+            <p>注：相关参数缺省值见标准附录 A，如有更新请选用最新发布值</p>
+            <p class="designer-info">本工具设计：广东省南华节能和低碳发展研究院，联系电话：86(0)20-8526 2231</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
